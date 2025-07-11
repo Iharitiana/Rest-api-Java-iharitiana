@@ -1,0 +1,43 @@
+name: Pipeline CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  compiler-et-tester:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Recuperer code
+      uses: actions/checkout@v3
+
+    - name: Configurer Java
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Compiler code Java
+      run: |
+        cd src
+        javac *.java
+
+    - name: Construire image Docker
+      run: |
+        docker build -t rest-api-java .
+
+    - name: Lancer conteneur et tester l'API
+      run: |
+        docker run -d -p 8080:8080 rest-api-java
+        sleep 5 
+        curl -X POST http://localhost:8080/tickets -d "ticket=001" | grep "Ticket ajoute : 001"
+        curl http://localhost:8080/tickets/count | grep "Personnes en attente : 1"
+        curl http://localhost:8080/tickets/peek | grep "Prochain ticket : 001"
+        curl http://localhost:8080/tickets/next | grep "Ticket traite : 001"
+        curl http://localhost:8080/tickets/next | grep "Erreur : File vide"
+        curl -X PUT http://localhost:8080/tickets | grep "Methode ou chemin non autorise"
