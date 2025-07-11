@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion des Tickets</title>
+    <link rel="stylesheet" href="frontend.css">
+</head>
+<body>
+    <h1>Gestion des Tickets</h1>
+    <div>
+        <h2>Ajouter un ticket</h2>
+        <input type="text" id="ticketInput" placeholder="Numero du ticket">
+        <button onclick="ajouterTicket()">Ajouter</button>
+        <p id="ajouterResultat"></p>
+    </div>
+    <div>
+        <h2>Consulter le prochain ticket</h2>
+        <button onclick="consulterTicket()">Consulter</button>
+        <p id="consulterResultat"></p>
+    </div>
+    <div>
+        <h2>Traiter le prochain ticket</h2>
+        <button onclick="traiterTicket()">Traiter</button>
+        <p id="traiterResultat"></p>
+    </div>
+    <div>
+        <h2>Compter les tickets en attente</h2>
+        <button onclick="compterTickets()">Compter</button>
+        <p id="compterResultat"></p>
+    </div>
+    <script src="frontend.js"></script>
+</body>
+</html>
