@@ -35,9 +35,9 @@ jobs:
       run: |
         docker run -d -p 8080:8080 rest-api-java
         sleep 5 
-        curl -X POST http://localhost:8080/tickets -d "ticket=001" | grep "Ticket ajoute : 001"
+        curl -X POST http://localhost:8080/tickets -d "ticket=001" | grep "Ticket ajoute : 1"
         curl http://localhost:8080/tickets/count | grep "Personnes en attente : 1"
-        curl http://localhost:8080/tickets/peek | grep "Prochain ticket : 001"
-        curl http://localhost:8080/tickets/next | grep "Ticket traite : 001"
+        curl http://localhost:8080/tickets/peek | grep "Prochain ticket : 1"
+        curl http://localhost:8080/tickets/next | grep "Ticket traite : 1"
         curl http://localhost:8080/tickets/next | grep "Erreur : File vide"
         curl -X PUT http://localhost:8080/tickets | grep "Methode ou chemin non autorise"
