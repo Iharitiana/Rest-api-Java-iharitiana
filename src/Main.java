@@ -1,22 +1,15 @@
+import com.sun.net.httpserver.HttpServer;
+import java.io.IOException;
+import java.net.InetSocketAddress;
+
 public class Main {
-    public static void main(String[] args) {
-        FIFO fifo = new FIFO();
-        
-        fifo.enqueue(1);
-        fifo.enqueue(2);
-        fifo.enqueue(3);
-        System.out.println("Prochain ticket : " + fifo.peek());
-        System.out.println("Ticket traité : " + fifo.dequeue()); 
-        System.out.println("En attente : " + fifo.size()); 
-        System.out.println("File vide : " + fifo.isEmpty());
-        fifo.dequeue();
-        fifo.dequeue();
-        System.out.println("En attente : " + fifo.size());
-        System.out.println("File vide :  " + fifo.isEmpty()); 
-        try {
-            fifo.dequeue();
-        } catch (IllegalStateException e) {
-            System.out.println("Erreur : " + e.getMessage()); 
-        }
+    public static final TaskService taskService = new TaskService();
+
+    public static void main(String[] args) throws IOException {
+        HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
+        server.createContext("/tickets", new TaskHandler());
+        server.setExecutor(null);
+        server.start();
+        System.out.println("Serveur démarré sur le port 8080");
     }
 }
