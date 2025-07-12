@@ -39,7 +39,7 @@ jobs:
         netstat -tuln | grep 80
         netstat -tuln | grep 8080
         curl http://localhost:80 | grep "Gestion des Tickets" || exit 1
-        curl -X POST http://localhost:8080/tickets -d "ticket=001&numeroGuichet=1" | grep "Ticket numero : 001 ajouter" || exit 1
+        curl -X POST http://localhost:8080/tickets -d "ticket=001&numeroGuichet=1" | grep "Ticket numero : 1 ajouter" || exit 1
         curl http://localhost:8080/tickets/count | grep "Personnes en attente : 1" || exit 1
         curl http://localhost:8080/tickets/peek | grep "Prochain ticket : tickets numero: 001" || exit 1
         curl http://localhost:8080/tickets/next | grep "Ticket traiter Guichet: 1" || exit 1
