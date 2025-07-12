@@ -1,15 +1,15 @@
 public class TaskService {
     private final FIFO task = new FIFO();
 
-    public void addTicket(int ticket) {
-        task.enqueue(ticket);
+    public void addTicket(int numero, int numeroGuichet) {
+        task.enqueue(numero, numeroGuichet);
     }
 
-    public int processNextTicket() {
+    public FIFO.Ticket processNextTicket() {
         return task.dequeue();
     }
 
-    public int peekNextTicket() {
+    public FIFO.Ticket peekNextTicket() {
         return task.peek();
     }
 

@@ -1,20 +1,35 @@
-import java.util.ArrayList;
-
 public class FIFO {
-    private ArrayList<Integer> queue = new ArrayList<>();
+    public static class Ticket {
+        private final int numero;
+        private final int numeroGuichet;
 
-    public void enqueue(int element) {
-        queue.add(element);
+        public Ticket(int numero, int numeroGuichet) {
+            this.numero = numero;
+            this.numeroGuichet = numeroGuichet;
+        }
+
+        public int getNumero() { 
+            return numero; 
+        }
+        public int getNumeroGuichet() { 
+            return numeroGuichet; 
+        }
     }
 
-    public int dequeue() {
+    private java.util.ArrayList<Ticket> queue = new java.util.ArrayList<>();
+
+    public void enqueue(int numero, int numeroGuichet) {
+        queue.add(new Ticket(numero, numeroGuichet));
+    }
+
+    public Ticket dequeue() {
         if (queue.isEmpty()) {
             throw new IllegalStateException("La file est vide");
         }
         return queue.remove(0);
     }
 
-    public int peek() {
+    public Ticket peek() {
         if (queue.isEmpty()) {
             throw new IllegalStateException("La file est vide");
         }

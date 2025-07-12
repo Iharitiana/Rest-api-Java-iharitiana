@@ -10,6 +10,7 @@
     <div>
         <h2>Ajouter un ticket</h2>
         <input type="text" id="ticketInput" placeholder="Numero du ticket">
+        <input type="number" id="guichetInput" placeholder="Numero du guichet">
         <button onclick="ajouterTicket()">Ajouter</button>
         <p id="ajouterResultat"></p>
     </div>
@@ -24,8 +25,8 @@
         <p id="traiterResultat"></p>
     </div>
     <div>
-        <h2>Compter les tickets en attente</h2>
-        <button onclick="compterTickets()">Compter</button>
+        <h2>Nombre de ticket en attente</h2>
+        <button onclick="compterTickets()">Rafraichir</button>
         <p id="compterResultat"></p>
     </div>
     <script src="frontend.js"></script>

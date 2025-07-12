@@ -1,16 +1,22 @@
 async function ajouterTicket() {
     const ticket = document.getElementById('ticketInput').value;
+    const guichet = document.getElementById('guichetInput').value;
     const resultat = document.getElementById('ajouterResultat');
-    try {
-        const response = await fetch('/tickets', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `ticket=${ticket}`
-        });
-        const texte = await response.text();
-        resultat.textContent = texte;
-    } catch (error) {
-        resultat.textContent = 'Erreur : ' + error.message;
+    if (ticket && guichet) {
+        try {
+            const response = await fetch('/tickets', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `ticket=${ticket}&numeroGuichet=${guichet}`
+            });
+            const texte = await response.text();
+            resultat.textContent = texte;
+            compterTickets(); 
+        } catch (error) {
+            resultat.textContent = 'Erreur : ' + error.message;
+        }
+    } else {
+        resultat.textContent = 'Erreur : Ticket et numero de guichet requis';
     }
 }
 
@@ -31,6 +37,7 @@ async function traiterTicket() {
         const response = await fetch('/tickets/next');
         const texte = await response.text();
         resultat.textContent = texte;
+        compterTickets(); 
     } catch (error) {
         resultat.textContent = 'Erreur : ' + error.message;
     }
@@ -46,3 +53,4 @@ async function compterTickets() {
         resultat.textContent = 'Erreur : ' + error.message;
     }
 }
+setInterval(compterTickets, 2000); 
