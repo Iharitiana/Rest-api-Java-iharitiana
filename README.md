@@ -1,13 +1,18 @@
-#REST API Java - Sans Framework
-##Description
+REST API Java 
+
+Description
 Ce projet est une API REST developpee en Java pur (sans frameworks) pour gérer un systeme de tickets (gestion de files d'attente). Elle implemente une structure FIFO (First In, First Out) pour ajouter, consulter et traiter des tickets, avec un deploiement automatise via GitHub Actions sur Render.
 
-##Prérequis
+IL Y A DES FICHIERs DE SCRIPT Test.sh et Test_avec_dockerisation.sh POUR EFFECTUER CES MANIPULATIONS AUTOMATIQUEMENT 
+
+Prérequis
+
 Java Development Kit (JDK) version 17 ou supérieure.
 Docker pour tester localement avec un conteneur.
 Git pour cloner le dépôt.
 
-##Installation 
+Installation 
+
 Cloner le dépôt
 ```bash
 git clone https://github.com/Iharitiana/Rest-api-Java-iharitiana.git
@@ -18,7 +23,8 @@ Compilez les fichiers Java avec javac et le lancer localement:
 javac src/*.java
 java -cp src Main
 ```
-##Testez l'API avec curl :
+Testez l'API avec curl :
+
 Ajouter un ticket :
 Méthode : POST
 URL : http://localhost:8080/tickets
@@ -55,6 +61,18 @@ Exemple :
 curl http://localhost:8080/tickets/count
 ```
 Reponse : Personnes en attente : 0 ou le nombre actuel
+
+Dockerisation
+
+Construire l'image:
+```bash
+docker build -t rest-api-image .
+```
+Creer le conteneur avec mappage des ports necessaires et le lancer:
+```bash
+docker run -p 80:80 -p 8080:8080 --name rest-api-conteneur rest-api-image
+```
+Puis refaire les tests avec curl
 
 Si la file est vide, /tickets/next retournera Erreur : File vide.
 Les requetes invalides retourneront Methode ou chemin non autorise.
