@@ -29,7 +29,7 @@
       - name: Deploiement sur Render
         run: |
           curl -X POST \
-            -H "Authorization: Bearer ${{ secrets.API_TOKEN }}" \
+            -H "Authorization: Bearer ${{ secrets.APITOKEN_READ_WRITE }}" \
             -H "Content-Type: application/json" \
             -d '{"serviceId": "${{ secrets.SERVICEID }}", "deployHook": "manual"}' \
             https://api.render.com/v1/services/${{ secrets.SERVICEID }}/deploys
