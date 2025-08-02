@@ -4,38 +4,206 @@
     <meta charset="UTF-8">
     <title>Gestion des Tickets</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="frontend.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--gray-100);
+            color: var(--gray-800);
+            line-height: 1.5;
+            min-height: 100vh;
+            padding: 1rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .main-title {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            letter-spacing: -0.025em;
+        }
+
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr));
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 12px -1px rgba(0, 0, 0, 0.15);
+        }
+
+        .card h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--gray-800);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        input {
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--gray-200);
+            border-radius: 8px;
+            font-size: 1rem;
+            width: 100%;
+            transition: border-color 0.15s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        button {
+            width: 100%;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.15s;
+        }
+
+        button:hover {
+            background: var(--primary-dark);
+        }
+
+        .result {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background: var(--gray-50);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            color: var(--gray-700);
+            border: 1px solid var(--gray-200);
+        }
+
+        .loader {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--gray-200);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            margin: 2rem auto;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem auto;
+            }
+
+            .card {
+                padding: 1.25rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 0.5rem;
+            }
+
+            .container {
+                padding: 0 0.5rem;
+                margin: 0.5rem auto;
+            }
+
+            .grid {
+                gap: 1rem;
+            }
+
+            .card {
+                padding: 1rem;
+            }
+
+            input, button {
+                padding: 0.625rem 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="main-title">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;margin-right:10px;"><path d="M4 7V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2" stroke="#007bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="4" y="7" width="16" height="13" rx="2" fill="#e3f2fd" stroke="#007bff" stroke-width="2"/><path d="M8 11h8M8 15h4" stroke="#007bff" stroke-width="2" stroke-linecap="round"/></svg>
-            Gestion des Tickets
-        </h1>
-        <div class="card">
-            <h2>Ajouter un ticket</h2>
-            <div class="form-group">
-                <input type="text" id="ticketInput" placeholder="Numéro du ticket">
-                <input type="number" id="guichetInput" placeholder="Numéro du guichet">
-                <button onclick="ajouterTicket()"> Ajouter</button>
+        <h1 class="main-title">Gestion des Tickets</h1>
+        <div class="grid">
+            <div class="card">
+                <h2>Ajouter un ticket</h2>
+                <div class="form-group">
+                    <input type="text" id="ticketInput" placeholder="Numero du ticket">
+                    <input type="number" id="guichetInput" placeholder="Numero du guichet">
+                    <button onclick="ajouterTicket()">Ajouter</button>
+                </div>
+                <p id="ajouterResultat" class="result"></p>
             </div>
-            <p id="ajouterResultat" class="result"></p>
-        </div>
-        <div class="card">
-            <h2>Consulter le prochain ticket</h2>
-            <button onclick="consulterTicket()">Consulter</button>
-            <p id="consulterResultat" class="result"></p>
-        </div>
-        <div class="card">
-            <h2>le prochain ticket</h2>
-            <button onclick="traiterTicket()">Traiter</button>
-            <p id="traiterResultat" class="result"></p>
-        </div>
-        <div class="card">
-            <h2>Nombre de tickets en attente</h2>
-            <button onclick="compterTickets()">Rafraîchir</button>
-            <p id="compterResultat" class="result"></p>
+
+            <div class="card">
+                <h2>Consulter le prochain ticket</h2>
+                <button onclick="consulterTicket()">Consulter</button>
+                <p id="consulterResultat" class="result"></p>
+            </div>
+
+            <div class="card">
+                <h2>Traiter le prochain ticket</h2>
+                <button onclick="traiterTicket()">Traiter</button>
+                <p id="traiterResultat" class="result"></p>
+            </div>
+
+            <div class="card">
+                <h2>Nombre de tickets en attente</h2>
+                <button onclick="compterTickets()">Rafraichir</button>
+                <p id="compterResultat" class="result"></p>
+            </div>
         </div>
         <div id="loader" class="loader" style="display:none;"></div>
     </div>
