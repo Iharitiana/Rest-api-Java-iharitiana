@@ -3,32 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <title>Gestion des Tickets</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="frontend.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Gestion des Tickets</h1>
-    <div>
-        <h2>Ajouter un ticket</h2>
-        <input type="text" id="ticketInput" placeholder="Numero du ticket">
-        <input type="number" id="guichetInput" placeholder="Numero du guichet">
-        <button onclick="ajouterTicket()">Ajouter</button>
-        <p id="ajouterResultat"></p>
-    </div>
-    <div>
-        <h2>Consulter le prochain ticket</h2>
-        <button onclick="consulterTicket()">Consulter</button>
-        <p id="consulterResultat"></p>
-    </div>
-    <div>
-        <h2>Traiter le prochain ticket</h2>
-        <button onclick="traiterTicket()">Traiter</button>
-        <p id="traiterResultat"></p>
-    </div>
-    <div>
-        <h2>Nombre de ticket en attente</h2>
-        <button onclick="compterTickets()">Rafraichir</button>
-        <p id="compterResultat"></p>
+    <div class="container">
+        <h1 class="main-title">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;margin-right:10px;"><path d="M4 7V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2" stroke="#007bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="4" y="7" width="16" height="13" rx="2" fill="#e3f2fd" stroke="#007bff" stroke-width="2"/><path d="M8 11h8M8 15h4" stroke="#007bff" stroke-width="2" stroke-linecap="round"/></svg>
+            Gestion des Tickets
+        </h1>
+        <div class="card">
+            <h2>Ajouter un ticket</h2>
+            <div class="form-group">
+                <input type="text" id="ticketInput" placeholder="Numéro du ticket">
+                <input type="number" id="guichetInput" placeholder="Numéro du guichet">
+                <button onclick="ajouterTicket()"> Ajouter</button>
+            </div>
+            <p id="ajouterResultat" class="result"></p>
+        </div>
+        <div class="card">
+            <h2>Consulter le prochain ticket</h2>
+            <button onclick="consulterTicket()">Consulter</button>
+            <p id="consulterResultat" class="result"></p>
+        </div>
+        <div class="card">
+            <h2>le prochain ticket</h2>
+            <button onclick="traiterTicket()">Traiter</button>
+            <p id="traiterResultat" class="result"></p>
+        </div>
+        <div class="card">
+            <h2>Nombre de tickets en attente</h2>
+            <button onclick="compterTickets()">Rafraîchir</button>
+            <p id="compterResultat" class="result"></p>
+        </div>
+        <div id="loader" class="loader" style="display:none;"></div>
     </div>
     <script src="frontend.js"></script>
+    <script>
+    function showLoader() {
+        document.getElementById('loader').style.display = 'block';
+    }
+    function hideLoader() {
+        document.getElementById('loader').style.display = 'none';
+    }
+    </script>
 </body>
 </html>
